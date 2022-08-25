@@ -1,6 +1,6 @@
 import React from 'react';
-import AppLoading from 'expo-app-loading';
 import { ThemeProvider } from 'styled-components';
+import * as SplashScreen from 'expo-splash-screen';
 
 import {
   useFonts,
@@ -14,18 +14,22 @@ import theme from './src/global/styles/theme'
 import { Dashboard } from './src/screens/Dashboard';
 
 export default function App() {
-  const [fontsLoaded] = useFonts([
+
+  SplashScreen.preventAutoHideAsync();
+
+  const fontLoaded = useFonts([
     FiraMono_400Regular,
     FiraMono_500Medium,
     FiraMono_700Bold
   ]);
 
-  if(!fontsLoaded){
-    return <AppLoading />
+  if (!fontLoaded) {
+    return null;
   }
+
   return (
     <ThemeProvider theme= {theme}>
       <Dashboard />
     </ThemeProvider>    
-  )
+  );
 }
