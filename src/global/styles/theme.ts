@@ -18,9 +18,9 @@ export default {
     },
 
     fonts: {
-        regular: 'FiraMono_400Regular',
-        medium: 'FiraMono_500Medium',
-        bold: 'FiraMono_700Bold',
+        regular: 'Kanit_400Regular',
+        medium: 'Kanit_500Medium',
+        bold: 'Kanit_700Bold',
 
     }
      
