@@ -1,6 +1,7 @@
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components/native";
 import { Feather } from "@expo/vector-icons"
+import { getStatusBarHeight } from "react-native-iphone-x-helper";
 
 export const Container = styled.View`
     flex: 1;
@@ -23,7 +24,7 @@ export const UserWrapper = styled.View`
     width: 100%;
     padding: 0 24px;
 
-    margin-top: ${RFValue(43)}px;
+    margin-top: ${getStatusBarHeight(true)}px;
 
     flex-direction: row;
     justify-content: space-between;

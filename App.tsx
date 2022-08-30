@@ -1,6 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { ThemeProvider } from 'styled-components';
 import * as SplashScreen from 'expo-splash-screen';
+import * as Font from 'expo-font';
+import { View } from 'react-native';
 
 import {
   useFonts,
@@ -14,39 +16,47 @@ import theme from './src/global/styles/theme'
 import { Dashboard } from './src/screens/Dashboard';
 
 export default function App() {
-
-  SplashScreen.preventAutoHideAsync();
-
-  const [isLoaded] = useFonts([
-    Kanit_400Regular,
-    Kanit_500Medium,
-    Kanit_700Bold,
-  ]);
+  const [appIsReady, setAppIsReady] = useState(false);
 
   useEffect(() => {
-    const showSplashScreen = async() => {
-      await SplashScreen.preventAutoHideAsync();
-    };
+    async function prepare() {
+      try {
+        await SplashScreen.preventAutoHideAsync();
+        await Font.loadAsync({
+          Kanit_400Regular,
+          Kanit_500Medium,
+          Kanit_700Bold,
+        });
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        setAppIsReady(true);
+      }
+    }
 
-    showSplashScreen();
+    prepare();
+  }, [])
 
-  }, []);
-
-  useEffect(() => {
-    const hideSplashScreen = async() => {
+  const onLayoutRootView = useCallback(async () => {
+    if (appIsReady) {
       await SplashScreen.hideAsync();
-    };
+    }
+  }, [appIsReady]);
 
-    if (isLoaded) hideSplashScreen();
-  }, [isLoaded]);
-
-    if (!isLoaded) {
-      return null
-    };
+  if (!appIsReady) {
+    return null;
+  }
 
   return (
-    <ThemeProvider theme= {theme}>
-      <Dashboard />
-    </ThemeProvider>    
+    <View
+      onLayout={onLayoutRootView}
+      style={{
+        flex: 1
+      }}
+    >
+     <ThemeProvider theme= {theme}>
+        <Dashboard />
+      </ThemeProvider>  
+    </View>
   );
 }
