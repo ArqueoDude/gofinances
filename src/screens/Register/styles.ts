@@ -22,3 +22,5 @@ export const Title = styled.Text`
     font-size: ${RFValue(18)}px;
     color: ${({ theme }) => theme.colors.shape};
 `;
+
+export const Form = styled.View``;
