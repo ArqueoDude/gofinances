@@ -13,7 +13,7 @@ import {
 
 import theme from './src/global/styles/theme'
 
-import { Dashboard } from './src/screens/Dashboard';
+import { Register } from './src/screens/Register';
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
@@ -55,7 +55,7 @@ export default function App() {
       }}
     >
      <ThemeProvider theme= {theme}>
-        <Dashboard />
+        <Register />
       </ThemeProvider>  
     </View>
   );
