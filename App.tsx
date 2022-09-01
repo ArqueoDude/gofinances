@@ -13,7 +13,7 @@ import {
 
 import theme from './src/global/styles/theme'
 
-import { Register } from './src/screens/Register';
+import { CategorySelect } from './src/screens/CategorySelect';
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
@@ -55,7 +55,7 @@ export default function App() {
       }}
     >
      <ThemeProvider theme= {theme}>
-        <Register />
+        <CategorySelect />
       </ThemeProvider>  
     </View>
   );
