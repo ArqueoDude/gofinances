@@ -1,8 +1,9 @@
-import React, { useState}  from 'react';
+import React, { useEffect, useState}  from 'react';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Keyboard, Modal, TouchableWithoutFeedback, Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { InputForm } from '../../components/Forms/InputForm';
 import { Button } from '../../components/Forms/Button';
@@ -21,8 +22,7 @@ import {
 } from "./styles";
 
 interface FormData{
-    name: string;
-    amount: string;
+    [name: string]: any;
 };
 
 const schema = Yup.object().shape({
@@ -33,11 +33,14 @@ const schema = Yup.object().shape({
         .number()
         .typeError('Informe um valor númerico')
         .positive('O valor não pode ser negativo')
+        .required('Preço é obrigatório')
 });
 
 export function Register(){
     const [transactionType, setTransactionType] = useState('');
     const [categoryModalOpen, setCategoryModalOpen] = useState(false);
+
+    const dataKey = '@gofinances:transactions';
 
     const [category, setCategory] = useState({
         key: 'category',
@@ -64,7 +67,7 @@ const {
         setCategoryModalOpen(false);
     };
 
-    function handleRegister(form: FormData){
+    async function handleRegister(form: FormData){
         if(!transactionType)
             return Alert.alert('Preencha o tipo da transação');
 
@@ -77,7 +80,22 @@ const {
             transactionType,
             category: category.key
         }
+        try {
+           await AsyncStorage.setItem(dataKey, JSON.stringify(data));
+        } catch (error) {
+            console.log(error);
+            Alert.alert("Não foi possível salvar");
+        }
     };
+
+    useEffect(() => {
+        async function loadData(){
+        const data = await AsyncStorage.getItem(dataKey);
+        console.log(JSON.parse(data!));
+        }
+        loadData();
+    }, [])
+
    return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <Container>

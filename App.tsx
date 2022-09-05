@@ -1,8 +1,10 @@
+import 'react-native-gesture-handler';
 import React, { useEffect, useState, useCallback } from 'react';
 import { ThemeProvider } from 'styled-components';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
 import { View } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import {
   useFonts,
@@ -13,7 +15,8 @@ import {
 
 import theme from './src/global/styles/theme'
 
-import { Register } from './src/screens/Register';
+import { NavigationContainer } from '@react-navigation/native';
+import { AppRoutes } from './src/Routes/app.routes';
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
@@ -54,9 +57,15 @@ export default function App() {
         flex: 1
       }}
     >
-     <ThemeProvider theme= {theme}>
-        <Register />
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <ThemeProvider theme= {theme}>
+        <NavigationContainer>
+          <AppRoutes />
+        </NavigationContainer>
       </ThemeProvider>  
+    </GestureHandlerRootView>
+
+
     </View>
   );
 }
