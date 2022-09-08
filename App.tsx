@@ -9,6 +9,8 @@ import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
 import { View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
+
 
 import {
   useFonts,
@@ -19,8 +21,11 @@ import {
 
 import theme from './src/global/styles/theme'
 
-import { NavigationContainer } from '@react-navigation/native';
 import { AppRoutes } from './src/Routes/app.routes';
+
+import { SignIn } from './src/screens/SingIn';
+
+import { AuthProvider } from './src/hooks/auth'
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
@@ -65,7 +70,11 @@ export default function App() {
       <ThemeProvider theme= {theme}>
         <NavigationContainer>
           <StatusBar barStyle="light-content" />
-          <AppRoutes />
+
+          <AuthProvider>
+            <SignIn />
+          </AuthProvider>
+
         </NavigationContainer>
       </ThemeProvider>  
     </GestureHandlerRootView>
