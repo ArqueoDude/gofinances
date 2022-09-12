@@ -51,11 +51,11 @@ function AuthProvider({ children }: AuthProviderProps ){
                     id: userInfo.id,
                     email: userInfo.email,
                     name: userInfo.given_name,
-                    photo: userInfo.picture
+                    photo: userInfo.picture,
                 });
             }
 
-        } catch (error) {
+        } catch (error: any) {
             throw new Error(error);
         } 
     }
