@@ -1,6 +1,5 @@
 import 'react-native-gesture-handler';
-import 'intl';
-import 'intl/locale-data/jsonp/pt-BR';
+
 
 import React, { useEffect, useState, useCallback } from 'react';
 import { StatusBar } from 'react-native';
@@ -39,6 +38,7 @@ export default function App() {
           Kanit_500Medium,
           Kanit_700Bold,
         });
+        await new Promise(resolve => setTimeout(resolve, 2000));
       } catch (e) {
         console.warn(e);
       } finally {
@@ -51,7 +51,7 @@ export default function App() {
 
   const onLayoutRootView = useCallback(async () => {
     if (appIsReady) {
-      await SplashScreen.hideAsync();
+       await SplashScreen.hideAsync();
     }
   }, [appIsReady]);
 
